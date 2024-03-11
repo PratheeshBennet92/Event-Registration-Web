@@ -1,16 +1,18 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-
+import 'package:event_registration_web/formviewmodel.dart';
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key, required this.eventName});
-  final String eventName;  
+  final String eventName;
   @override
   State<FormWidget> createState() => _FormWidgetState();
 }
 
 class _FormWidgetState extends State<FormWidget> {
   final _formKey = GlobalKey<FormState>();
+  final FormViewModel viewModel = FormViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +34,24 @@ class _FormWidgetState extends State<FormWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _buildTextField('Name', _nameValidator),
-                _buildTextField('Designation', null),
-                _buildTextField('Contact #', null),
-                _buildTextField('Email id', _emailValidator),
-                _buildTextField('City', null),
-                _buildTextField('Institution', null),
+                _buildTextField(
+                    'Name', viewModel.validateName, (value) => viewModel.formData.name = value),
+                _buildTextField(
+                    'Designation', null, (value) => viewModel.formData.designation = value),
+                _buildTextField(
+                    'Contact #', null, (value) => viewModel.formData.contactNumber = value),
+                _buildTextField(
+                    'Email id', viewModel.validateEmail, (value) => viewModel.formData.email = value),
+                _buildTextField('City', null, (value) => viewModel.formData.city = value),
+                _buildTextField(
+                    'Institution', null, (value) => viewModel.formData.institution = value),
                 const SizedBox(height: 20.0),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         // Form is valid, submit the data
+                        viewModel.submitForm();
                       }
                     },
                     child: const Text('Submit'),
@@ -57,7 +65,8 @@ class _FormWidgetState extends State<FormWidget> {
     );
   }
 
-  Widget _buildTextField(String labelText, String? Function(String?)? validator) {
+  Widget _buildTextField(String labelText, String? Function(String?)? validator,
+      void Function(String?)? onChanged) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
@@ -65,30 +74,8 @@ class _FormWidgetState extends State<FormWidget> {
         decoration: InputDecoration(
             labelText: labelText, border: const OutlineInputBorder()),
         validator: validator,
+        onChanged: onChanged,
       ),
     );
   }
-}
-
-String? _emailValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter an email';
-  } else if (!isValidEmail(value)) {
-    return 'Please enter a valid email';
-  }
-  return null;
-}
-
-String? _nameValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter a name';
-  }
-  return null;
-}
-
-
-bool isValidEmail(String email) {
-  // Simple email validation using a regular expression
-  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  return emailRegex.hasMatch(email);
 }
