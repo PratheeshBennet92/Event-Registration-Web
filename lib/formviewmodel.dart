@@ -54,8 +54,14 @@ class FormViewModel extends ChangeNotifier {
 
     // Prepare the form data to send to the API
     Map<String, dynamic> requestBody = {
-      'name': _formData.name,
-      'email': _formData.email,
+      'participantName': _formData.name,
+      'participantEmail': _formData.email,
+      'designation': _formData.designation,
+      'contact': _formData.contactNumber,
+      'city': _formData.city,
+      'institution': _formData.institution,
+      'participantId': '',
+      'eventId': '',
       // Add other form fields as needed
     };
 
