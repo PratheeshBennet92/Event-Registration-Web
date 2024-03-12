@@ -45,29 +45,38 @@ class FormViewModel extends ChangeNotifier {
   Future<void> submitForm() async {
     // Perform any additional logic here
     print('Form name ${_formData.name}');
-    print('Form designation ${_formData.designation}');
+    print('Foremailm designation ${_formData.designation}');
     print('Form email ${_formData.email}');
     print('Form contactNumber ${_formData.contactNumber}');
     print('Form city ${_formData.city}');
     print('Form institution ${_formData.institution}');
 
 
-    // Prepare the form data to send to the API
-    Map<String, dynamic> requestBody = {
-      'participantName': _formData.name,
-      'participantEmail': _formData.email,
-      'designation': _formData.designation,
-      'contact': _formData.contactNumber,
-      'city': _formData.city,
-      'institution': _formData.institution,
-      'participantId': '',
-      'eventId': '',
-      // Add other form fields as needed
-    };
+   Map<String, dynamic> participants = {
+  "participantName": "_formData.name",
+  "eventId": "30012024234548438",
+  "designation": "_formData.designation",
+  "contact": "_formData.contactNumber",
+  "city": "_formData.city",
+  "institution": "_formData.institution",
+  "participantId": "132",
+  "participantEmail": "pb33_db@example.com",
+  "status": "registered"
+  // Add other form fields as needed
+};
 
+Map<String, dynamic> requestBody = {
+  "parentDeviceId": "B287B760-8695-44E4-A4E9-4E55D8DC7A6",
+  "eventId": "12032024215641780",
+  "name": "Test Event 1",
+  "date": "25-07-2024",
+  "participants": [participants]
+};
+
+     print({requestBody});
     // Make the API request
-    final url = Uri.parse('your_api_endpoint');
-    final response = await http.post(
+    final url = Uri.parse('https://zjk4kiwx8h.execute-api.us-east-1.amazonaws.com/dev/item/');
+    final response = await http.put(
       url,
       body: json.encode(requestBody),
       headers: {'Content-Type': 'application/json'},
@@ -77,7 +86,7 @@ class FormViewModel extends ChangeNotifier {
     if (response.statusCode == 200) {
       print('Form data submitted successfully');
     } else {
-      print('Failed to submit form data: ${response.reasonPhrase}');
+      print('Failed to submit form data: ${response.body}');
     }
   }
 }
