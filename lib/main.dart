@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:event_registration_web/form.dart';
 import 'dart:html' as html;
+import 'formviewmodel.dart'; // Import your FormViewModel class
+
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    // Wrap MyApp with Provider and provide the FormViewModel
+    ChangeNotifierProvider(
+      create: (context) => FormViewModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

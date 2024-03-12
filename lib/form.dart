@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:event_registration_web/formviewmodel.dart';
+import 'package:provider/provider.dart';
+
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key, required this.eventName});
   final String eventName;
@@ -11,10 +13,9 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   final _formKey = GlobalKey<FormState>();
-  final FormViewModel viewModel = FormViewModel();
-
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<FormViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Registration Form ${widget.eventName}'),
@@ -34,27 +35,32 @@ class _FormWidgetState extends State<FormWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                _buildTextField('Name', viewModel.validateName,
+                    (value) => viewModel.formData.name = value),
+                _buildTextField('Designation', null,
+                    (value) => viewModel.formData.designation = value),
+                _buildTextField('Contact #', null,
+                    (value) => viewModel.formData.contactNumber = value),
+                _buildTextField('Email id', viewModel.validateEmail,
+                    (value) => viewModel.formData.email = value),
                 _buildTextField(
-                    'Name', viewModel.validateName, (value) => viewModel.formData.name = value),
-                _buildTextField(
-                    'Designation', null, (value) => viewModel.formData.designation = value),
-                _buildTextField(
-                    'Contact #', null, (value) => viewModel.formData.contactNumber = value),
-                _buildTextField(
-                    'Email id', viewModel.validateEmail, (value) => viewModel.formData.email = value),
-                _buildTextField('City', null, (value) => viewModel.formData.city = value),
-                _buildTextField(
-                    'Institution', null, (value) => viewModel.formData.institution = value),
+                    'City', null, (value) => viewModel.formData.city = value),
+                _buildTextField('Institution', null,
+                    (value) => viewModel.formData.institution = value),
                 const SizedBox(height: 20.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState?.validate() ?? false) {
                         // Form is valid, submit the data
-                        viewModel.submitForm();
+                        if (!viewModel.isLoading) {
+                          await viewModel.submitForm();
+                        }
                       }
                     },
-                    child: const Text('Submit'),
+                    child: viewModel.isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text('Submit'),
                   ),
                 ),
               ],
