@@ -11,7 +11,7 @@ class SuccessScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          'Registration successfully',
+          'Registration successful',
           style: TextStyle(fontSize: 20),
         ),
       ),
