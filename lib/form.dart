@@ -3,10 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:event_registration_web/formviewmodel.dart';
 import 'package:provider/provider.dart';
+import 'success.dart';
+import 'failure.dart';
 
 class FormWidget extends StatefulWidget {
-  const FormWidget({super.key, required this.eventName});
+  const FormWidget({super.key, required this.eventName, required this.eventId, required this.parentDeviceId});
   final String eventName;
+  final String eventId;
+  final String parentDeviceId;
   @override
   State<FormWidget> createState() => _FormWidgetState();
 }
@@ -55,6 +59,22 @@ class _FormWidgetState extends State<FormWidget> {
                         // Form is valid, submit the data
                         if (!viewModel.isLoading) {
                           await viewModel.submitForm();
+                          // Check if form submission is successful
+                          if (viewModel.isSuccess) {
+                            // Navigate to success screen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SuccessScreen()),
+                            );
+                          } else {
+                            // Navigate to failure screen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const FailureScreen()),
+                            );
+                          }
                         }
                       }
                     },
