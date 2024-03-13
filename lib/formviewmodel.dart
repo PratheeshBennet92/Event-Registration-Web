@@ -15,7 +15,9 @@ class FormData {
 // ViewModel class responsible for form logic and data manipulation
 class FormViewModel extends ChangeNotifier {
   bool _isLoading = false;
+  bool _isSucsess = false;
   bool get isLoading => _isLoading;
+  bool get isSuccess => _isSucsess;
   final _formData = FormData();
 
   // Getters for accessing form data
@@ -89,8 +91,12 @@ class FormViewModel extends ChangeNotifier {
     notifyListeners();
     // Check the response status
     if (response.statusCode == 200) {
+      _isSucsess = true;
+      notifyListeners();
       print('Form data submitted successfully');
     } else {
+       _isSucsess = false;
+      notifyListeners();
       print('Failed to submit form data: ${response.body}');
     }
   }
