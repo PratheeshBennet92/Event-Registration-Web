@@ -4,6 +4,9 @@ import 'package:http/http.dart' as http;
 
 // Model class representing the data fields of the form
 class FormData {
+  String? eventId;
+  String? eventName;
+  String? parentDeviceId;
   String? name;
   String? designation;
   String? contactNumber;
