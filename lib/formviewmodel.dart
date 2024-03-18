@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 // Model class representing the data fields of the form
 class FormData {
@@ -60,15 +61,23 @@ class FormViewModel extends ChangeNotifier {
     print('Form city ${_formData.city}');
     print('Form institution ${_formData.institution}');
 
+    String name = _formData.name ?? '';
+    String designation = _formData.designation ?? '';
+    String email = _formData.email ?? '';
+    String contactNumber = _formData.contactNumber ?? '';
+    String city = _formData.city ?? '';
+    String institution = _formData.institution ?? '';
+    String eventId= _formData.eventId ?? '';
+
     Map<String, dynamic> participants = {
-      "participantName": "_formData.name",
-      "eventId": "30012024234548438",
-      "designation": "_formData.designation",
-      "contact": "_formData.contactNumber",
-      "city": "_formData.city",
-      "institution": "_formData.institution",
-      "participantId": "132",
-      "participantEmail": "pb33_db@example.com",
+      "participantName": name,
+      "eventId": eventId,
+      "designation": designation,
+      "contact": contactNumber,
+      "city": city,
+      "institution": institution,
+      "participantId": generateCurrentTimeStamp(),
+      "participantEmail": email,
       "status": "registered"
       // Add other form fields as needed
     };
@@ -98,10 +107,15 @@ class FormViewModel extends ChangeNotifier {
       notifyListeners();
       print('Form data submitted successfully');
     } else {
-       _isSucsess = false;
+      _isSucsess = false;
       notifyListeners();
       print('Failed to submit form data: ${response.body}');
     }
+  }
+
+  String generateCurrentTimeStamp() {
+    DateFormat formatter = DateFormat('ddMMyyyyHHmmssSSS');
+    return formatter.format(DateTime.now());
   }
 
   void setLoading(bool bool) {

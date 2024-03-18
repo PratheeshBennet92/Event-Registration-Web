@@ -17,9 +17,16 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   final _formKey = GlobalKey<FormState>();
+  
+  String? get eventId => widget.eventId;
+  String? get eventName => widget.eventName;
+  String? get parentDeviceId => widget.parentDeviceId;
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<FormViewModel>(context);
+    viewModel.formData.eventId = eventId ?? "";
+    viewModel.formData.eventName = eventName ?? "";
+    viewModel.formData.parentDeviceId = parentDeviceId ?? "";
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Registration Form ${widget.eventName}'),
