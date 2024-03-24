@@ -92,8 +92,9 @@ class FormViewModel extends ChangeNotifier {
     print({requestBody, _isLoading});
     try {
       // Make the API request
-      final url = Uri.parse(
-          'https://zjk4kiwx8h.execute-api.us-east-1.amazonaws.com/dev/item/');
+      final url = Uri.https('zjk4kiwx8h.execute-api.us-east-1.amazonaws.com', 'dev/item');
+      //final url = Uri.parse(
+      //    'https://zjk4kiwx8h.execute-api.us-east-1.amazonaws.com/dev/item/');
       final response = await http.put(
         url,
         body: json.encode(requestBody),
