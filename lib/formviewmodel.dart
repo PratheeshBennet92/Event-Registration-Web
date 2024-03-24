@@ -98,7 +98,10 @@ class FormViewModel extends ChangeNotifier {
       final response = await http.put(
         url,
         body: json.encode(requestBody),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*"
+          },
       );
       // After the request is complete, set isLoading to false
       _isLoading = false;
