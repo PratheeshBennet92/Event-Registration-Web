@@ -100,7 +100,8 @@ class FormViewModel extends ChangeNotifier {
         body: json.encode(requestBody),
         headers: {
           'Content-Type': 'application/json',
-          "Access-Control-Allow-Origin": "*"
+          "Access-Control-Allow-Origin": "*",
+          "Accept": "*/*"
           },
       );
       // After the request is complete, set isLoading to false
