@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:typed_data';
 
 // Model class representing the data fields of the form
 class FormData {
@@ -18,6 +20,8 @@ class FormData {
 
 // ViewModel class responsible for form logic and data manipulation
 class FormViewModel extends ChangeNotifier {
+  QrImageView? _qrImage;
+  QrImageView? get qrImage => _qrImage;
   bool _isLoading = false;
   bool _isSucsess = false;
   bool get isLoading => _isLoading;
@@ -111,6 +115,7 @@ class FormViewModel extends ChangeNotifier {
       if (response.statusCode == 200) {
         _isSucsess = true;
         notifyListeners();
+        generateQRCode();
         print('Form data submitted successfully');
       } else {
         _isSucsess = false;
@@ -134,6 +139,17 @@ class FormViewModel extends ChangeNotifier {
 
   void setLoading(bool bool) {
     _isLoading = bool;
+    notifyListeners();
+  }
+
+  // Method to generate QR code
+  void generateQRCode() {
+    final qrData = 'Your QR Code Data Here'; // Customize as needed
+    _qrImage = QrImageView(
+      data: qrData,
+      version: QrVersions.auto,
+      size: 200.0,
+    );
     notifyListeners();
   }
 }

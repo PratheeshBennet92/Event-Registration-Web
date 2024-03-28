@@ -72,7 +72,7 @@ class _FormWidgetState extends State<FormWidget> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SuccessScreen()),
+                                  builder: (context) => SuccessScreen(qrImageView: viewModel.qrImage!)),
                             );
                           } else {
                             // Navigate to failure screen
