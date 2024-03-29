@@ -144,7 +144,7 @@ class FormViewModel extends ChangeNotifier {
 
   // Method to generate QR code
   void generateQRCode() {
-    final qrData = 'Your QR Code Data Here';
+    final qrData = 'Your QR Code Data Here'; // Customize as needed
     _qrImage = QrImageView(
       data: qrData,
       version: QrVersions.auto,
