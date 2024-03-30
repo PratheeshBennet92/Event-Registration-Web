@@ -44,18 +44,23 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Success Test'),
+        title: Text('Success'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Icon(
+                Icons.check,
+                color: Colors.green,
+                size: 48, // Adjust size as needed
+              ),
             const Text(
               'Registration successful',
               style: TextStyle(fontSize: 20),
             ),
             const Text(
-              'Please download the registration QR code',
+              'Please download the entry pass QR code',
               style: TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 20),
