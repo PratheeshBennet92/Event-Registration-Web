@@ -49,7 +49,7 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Success v2'),
+        title: Text('Success Test'),
       ),
       body: Center(
         child: Column(

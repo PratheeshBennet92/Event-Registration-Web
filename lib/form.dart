@@ -29,7 +29,7 @@ class _FormWidgetState extends State<FormWidget> {
     viewModel.formData.parentDeviceId = parentDeviceId ?? "";
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Registration Form test ${widget.eventName}'),
+        title: Text('Event Registration Form Test ${widget.eventName}'),
       ),
       body: Center(
           child: SingleChildScrollView(
