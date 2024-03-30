@@ -24,11 +24,6 @@ class SuccessScreen extends StatelessWidget {
       if (imageData != null) {
         // Download the image using image_downloader_web
         await WebImageDownloader.downloadImageFromUInt8List(uInt8List: imageData, name:'qr_code.png');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Image downloaded successfully'),
-          ),
-        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
