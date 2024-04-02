@@ -30,10 +30,6 @@ class FailureScreen extends StatelessWidget {
                   Icons.close,
                   color: Colors.red,
                   size: 48, // Adjust size as needed
-                ),
-                const Text(
-                  'Registration failed. Please try again or contact organizer',
-                  style: TextStyle(fontSize: 20),
                 )
               ],
             ),

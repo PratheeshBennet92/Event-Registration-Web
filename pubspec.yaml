@@ -45,6 +45,9 @@ dependencies:
   path_provider: any
   image_downloader_web: ^2.0.4
   url_launcher: ^6.2.5
+  crypto: ^3.0.0
+  pointycastle: any
+  encrypt: any
   
 
 dev_dependencies:

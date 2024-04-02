@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:event_registration_web/encryption.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -64,6 +66,14 @@ class FormViewModel extends ChangeNotifier {
     print('Form city ${_formData.city}');
     print('Form institution ${_formData.institution}');
 
+    String? parentDeviceId = _formData.parentDeviceId;
+    if (parentDeviceId != null) {
+      parentDeviceId = parentDeviceId.unscrambleUUID();
+      print('parentDeviceId ${parentDeviceId}');
+     // Now parentDeviceId is unscrambled if it was not null initially
+    }
+    Uint8List key = parentDeviceId!.generateEncryptionKey();
+    print('key ${key}');
     String name = _formData.name ?? '';
     String designation = _formData.designation ?? '';
     String email = _formData.email ?? '';
@@ -73,7 +83,7 @@ class FormViewModel extends ChangeNotifier {
     String eventId = _formData.eventId ?? '';
 
     Map<String, dynamic> participants = {
-      "participantName": name,
+      "participantName": name.encryptString(key),
       "eventId": eventId,
       "designation": designation,
       "contact": contactNumber,
@@ -86,10 +96,9 @@ class FormViewModel extends ChangeNotifier {
     };
 
     Map<String, dynamic> requestBody = {
-      "parentDeviceId": "B287B760-8695-44E4-A4E9-4E55D8DC7A6",
-      "eventId": "12032024215641780",
-      "name": "Test Event 1",
-      "date": "25-07-2024",
+      "parentDeviceId": _formData.parentDeviceId ?? '',
+      "eventId": _formData.eventId ?? '',
+      "name":  _formData.eventName ?? "",
       "participants": [participants]
     };
     print({requestBody, _isLoading});
