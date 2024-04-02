@@ -86,11 +86,11 @@ class FormViewModel extends ChangeNotifier {
       "participantName": name.encryptString(key),
       "eventId": eventId,
       "designation": designation,
-      "contact": contactNumber,
+      "contact": contactNumber.encryptString(key),
       "city": city,
       "institution": institution,
       "participantId": generateCurrentTimeStamp(),
-      "participantEmail": email,
+      "participantEmail": email.encryptString(key),
       "status": "registered"
       // Add other form fields as needed
     };
