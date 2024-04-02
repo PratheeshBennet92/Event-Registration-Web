@@ -17,6 +17,7 @@ class FormData {
   String? email;
   String? city;
   String? institution;
+  String? participantId;
 }
 
 // ViewModel class responsible for form logic and data manipulation
@@ -81,7 +82,7 @@ class FormViewModel extends ChangeNotifier {
     String city = _formData.city ?? '';
     String institution = _formData.institution ?? '';
     String eventId = _formData.eventId ?? '';
-
+    _formData.participantId = generateCurrentTimeStamp();
     Map<String, dynamic> participants = {
       "participantName": name.encryptString(key),
       "eventId": eventId,
@@ -89,7 +90,7 @@ class FormViewModel extends ChangeNotifier {
       "contact": contactNumber.encryptString(key),
       "city": city,
       "institution": institution,
-      "participantId": generateCurrentTimeStamp(),
+      "participantId": _formData.participantId,
       "participantEmail": email.encryptString(key),
       "status": "registered"
       // Add other form fields as needed
@@ -152,7 +153,7 @@ class FormViewModel extends ChangeNotifier {
 
   // Method to generate QR code
   void generateQRCode() {
-    final qrData = 'Your QR Code Data Here'; // Customize as needed
+    final qrData = '${_formData.name ?? ''}-${_formData.eventName ?? ''}-${_formData.eventId ?? ''}-${_formData.participantId ?? ''}'; // Customize as needed
     _qrImage = QrImageView(
       data: qrData,
       version: QrVersions.auto,
