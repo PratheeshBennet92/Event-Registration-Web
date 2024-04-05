@@ -7,7 +7,11 @@ import 'success.dart';
 import 'failure.dart';
 
 class FormWidget extends StatefulWidget {
-  const FormWidget({super.key, required this.eventName, required this.eventId, required this.parentDeviceId});
+  const FormWidget(
+      {super.key,
+      required this.eventName,
+      required this.eventId,
+      required this.parentDeviceId});
   final String eventName;
   final String eventId;
   final String parentDeviceId;
@@ -17,7 +21,7 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   final _formKey = GlobalKey<FormState>();
-  
+
   String? get eventId => widget.eventId;
   String? get eventName => widget.eventName;
   String? get parentDeviceId => widget.parentDeviceId;
@@ -29,7 +33,7 @@ class _FormWidgetState extends State<FormWidget> {
     viewModel.formData.parentDeviceId = parentDeviceId ?? "";
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Registration Form Test v1.0.1 ${widget.eventName}'),
+        title: Text('Event Registration - ${widget.eventName}'),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -37,7 +41,7 @@ class _FormWidgetState extends State<FormWidget> {
           width: 400, // Set a fixed width
           padding: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: const Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Form(
@@ -58,6 +62,8 @@ class _FormWidgetState extends State<FormWidget> {
                     'City', null, (value) => viewModel.formData.city = value),
                 _buildTextField('Institution', null,
                     (value) => viewModel.formData.institution = value),
+                _buildTextField('Remarks', null,
+                    (value) => viewModel.formData.remarks = value),
                 const SizedBox(height: 20.0),
                 Center(
                   child: ElevatedButton(
@@ -72,7 +78,8 @@ class _FormWidgetState extends State<FormWidget> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SuccessScreen(qrImageView: viewModel.qrImage!)),
+                                  builder: (context) => SuccessScreen(
+                                      qrImageView: viewModel.qrImage!)),
                             );
                           } else {
                             // Navigate to failure screen

@@ -18,6 +18,7 @@ class FormData {
   String? city;
   String? institution;
   String? participantId;
+  String? remarks;
 }
 
 // ViewModel class responsible for form logic and data manipulation
@@ -59,22 +60,12 @@ class FormViewModel extends ChangeNotifier {
   Future<void> submitForm() async {
     _isLoading = true; // Set isLoading to true before making the API request
     notifyListeners(); // Notify listeners immediately
-    // Perform any additional logic here
-    print('Form name ${_formData.name}');
-    print('Foremailm designation ${_formData.designation}');
-    print('Form email ${_formData.email}');
-    print('Form contactNumber ${_formData.contactNumber}');
-    print('Form city ${_formData.city}');
-    print('Form institution ${_formData.institution}');
-
     String? parentDeviceId = _formData.parentDeviceId;
     if (parentDeviceId != null) {
       parentDeviceId = parentDeviceId.unscrambleUUID();
-      print('parentDeviceId ${parentDeviceId}');
      // Now parentDeviceId is unscrambled if it was not null initially
     }
     Uint8List key = parentDeviceId!.generateEncryptionKey();
-    print('key ${key}');
     String name = _formData.name ?? '';
     String designation = _formData.designation ?? '';
     String email = _formData.email ?? '';
@@ -82,6 +73,7 @@ class FormViewModel extends ChangeNotifier {
     String city = _formData.city ?? '';
     String institution = _formData.institution ?? '';
     String eventId = _formData.eventId ?? '';
+    String remarks = _formData.remarks ?? '';
     _formData.participantId = generateCurrentTimeStamp();
     Map<String, dynamic> participants = {
       "participantName": name.encryptString(key),
@@ -92,7 +84,8 @@ class FormViewModel extends ChangeNotifier {
       "institution": institution,
       "participantId": _formData.participantId,
       "participantEmail": email.encryptString(key),
-      "status": "registered"
+      "status": "registered",
+      "remarks": remarks
       // Add other form fields as needed
     };
 
